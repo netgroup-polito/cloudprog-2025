@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: Time Server API
+  version: 1.0.0
+  description: A simple API to get the current time
+servers:
+  - url: http://localhost:8080
+    description: Local server
+paths:
+  /time:
+    get:
+      summary: Get the current time
+      description: Returns the current server time
+      parameters:
+        - in: query
+          name: timezone
+          schema:
+            type: string
+            default: ""
+          required: false
+          description: The timezone to get the current time for (e.g., 'UTC', 'America/New_York')
+      responses:
+        '200':
+          description: A JSON object containing the current time
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeResponse'
+
+components:
+  schemas:
+    TimeResponse:
+      type: object
+      properties:
+        currentTime:
+          type: string
+          format: date-time
+          example: '2025-02-23T10:00:00Z'
