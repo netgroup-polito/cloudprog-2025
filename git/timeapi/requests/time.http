@@ -1,2 +1,9 @@
 GET http://localhost:8080/time
-Accept: application/json
+
+###
+
+GET http://localhost:8080/time?timezone=America/New_York
+
+###
+
+GET http://localhost:8080/time?timezone=Europe/London
