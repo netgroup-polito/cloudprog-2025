@@ -147,4 +147,8 @@ linters:
     - wrapcheck
     # - wsl
     - zerologlint
- 
+issues:
+  exclude-rules:
+  - path: "_test.go"
+    linters:
+    - revive
