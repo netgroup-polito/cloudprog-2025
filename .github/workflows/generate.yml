@@ -1,0 +1,57 @@
+name: Check Generated Artifacts
+on:
+  push: 
+    branches:  
+        - frc/ci-generate
+  pull_request:
+
+jobs:
+  generated-artifacts:
+    name: Check Generated Artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.head.sha }}"
+          persist-credentials: false
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Run the automatic generation
+        working-directory: ./git/timeapi
+        run: |
+          make generate
+
+      - name: Gather the differences
+        id: git-diff
+        working-directory: ./git/timeapi
+        run: |
+          # Ensure new files are also considered in the diff
+          git add --intent-to-add .
+
+          output=$(git diff | head -n 100)
+          exit_code=$([ "${output}" ] && echo 1 || echo 0)
+
+          # Required to correctly manage multi-line outputs
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}"
+
+          # Store the different as step output
+          echo "diff=${output}" >> $GITHUB_OUTPUT
+
+          # Trigger a failure in case the diff is not empty
+          exit ${exit_code}
+
+      - name: Log the error if the diff is not empty (in case the comment cannot be generated)
+        working-directory: ./git/timeapi
+        run: |
+          echo "The generated artifacts appear to be out-of-date."
+          echo
+          echo "Here it is an excerpt of the diff:"
+          echo "${{ steps.git-diff.outputs.diff }}"
+        if: failure()
