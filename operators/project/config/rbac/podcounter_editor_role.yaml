@@ -1,0 +1,27 @@
+# permissions for end users to edit podcounters.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: project
+    app.kubernetes.io/managed-by: kustomize
+  name: podcounter-editor-role
+rules:
+- apiGroups:
+  - counters.cloudprog.polito.it
+  resources:
+  - podcounters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - counters.cloudprog.polito.it
+  resources:
+  - podcounters/status
+  verbs:
+  - get

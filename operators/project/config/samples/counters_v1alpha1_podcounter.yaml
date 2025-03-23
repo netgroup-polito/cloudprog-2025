@@ -1,0 +1,8 @@
+apiVersion: counters.cloudprog.polito.it/v1alpha1
+kind: PodCounter
+metadata:
+  labels:
+    app.kubernetes.io/name: project
+    app.kubernetes.io/managed-by: kustomize
+  name: podcounter-sample
+spec:
