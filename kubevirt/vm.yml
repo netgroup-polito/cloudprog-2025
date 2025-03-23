@@ -1,0 +1,54 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-cloudprog-${VM_NUM}
+  name: vm-cloudprog-${VM_NUM}
+spec:
+  runStrategy: Always
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-cloudprog-${VM_NUM}
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: datavolumedisk
+          - disk:
+              bus: virtio
+            name: cloudinitdisk
+        resources:
+          requests:
+            memory: 2Gi
+            cpu: 1
+      volumes:
+      - dataVolume:
+          name: vm-cloudprog-${VM_NUM}-dv
+        name: datavolumedisk
+      - cloudInitNoCloud:
+          userData: |-
+            #cloud-config
+            password: ubuntu
+            sudo: ALL=(ALL) NOPASSWD:ALL
+            ssh_pwauth: True
+            lock-passwd: false
+            chpasswd: { expire: False }
+            ssh_authorized_keys:
+              - ${SSH_PUB_KEY}
+        name: cloudinitdisk
+  dataVolumeTemplates:
+  - metadata:
+      name: vm-cloudprog-${VM_NUM}-dv
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 50Gi
+      source:
+        registry:
+          url: docker://ghcr.io/cheina97/kubevirt-ubuntu:oracular
