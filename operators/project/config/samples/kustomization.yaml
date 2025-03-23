@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- counters_v1alpha1_podcounter.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples

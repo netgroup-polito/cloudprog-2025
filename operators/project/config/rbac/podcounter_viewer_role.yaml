@@ -1,0 +1,23 @@
+# permissions for end users to view podcounters.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: project
+    app.kubernetes.io/managed-by: kustomize
+  name: podcounter-viewer-role
+rules:
+- apiGroups:
+  - counters.cloudprog.polito.it
+  resources:
+  - podcounters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - counters.cloudprog.polito.it
+  resources:
+  - podcounters/status
+  verbs:
+  - get
