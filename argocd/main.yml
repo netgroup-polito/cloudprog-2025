@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: main
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: argocd
+  project: default
+  source:
+    path: ./argocd/applications/
+    repoURL: https://github.com/netgroup-polito/cloudprog-2025.git
+    targetRevision: frc/argocd
+  syncPolicy:
+    automated: {}

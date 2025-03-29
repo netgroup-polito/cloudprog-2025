@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: monitoring
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated: {}
+  ignoreDifferences:
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+    jqPathExpressions:
+    - .webhooks[]?.clientConfig.caBundle
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    jqPathExpressions:
+    - .webhooks[]?.clientConfig.caBundle
+  sources:
+  - repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 70.3.0
+    helm:
+      valueFiles:
+        - $values/argocd/applications/kube-prometheus/values.yml
+  - repoURL: https://github.com/netgroup-polito/cloudprog-2025.git
+    targetRevision: frc/argocd
+    ref: values

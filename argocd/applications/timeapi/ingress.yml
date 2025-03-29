@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: timeapi
+  labels:
+    name: timeapi
+spec:
+  rules:
+  - host: timeapi.kind.local
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: timeapi
+            port: 
+              number: 8080
