@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: timeapi
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: timeapi
+  project: default
+  source:
+    path: ./argocd/applications/timeapi
+    repoURL: https://github.com/netgroup-polito/cloudprog-2025.git # Replace with your repo URL
+    targetRevision: frc/argocd
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated: {}

@@ -1,0 +1,14 @@
+alertmanager:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.kind.local
+    
