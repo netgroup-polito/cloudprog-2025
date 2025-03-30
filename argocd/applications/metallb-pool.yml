@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/netgroup-polito/cloudprog-2025.git
-    targetRevision: frc/argocd
+    targetRevision: main
     path: ./argocd/applications/metallb-pool/
   destination:
     name: in-cluster

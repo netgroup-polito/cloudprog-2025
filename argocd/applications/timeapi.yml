@@ -13,7 +13,7 @@ spec:
   source:
     path: ./argocd/applications/timeapi
     repoURL: https://github.com/netgroup-polito/cloudprog-2025.git # Replace with your repo URL
-    targetRevision: frc/argocd
+    targetRevision: main
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

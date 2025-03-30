@@ -32,5 +32,5 @@ spec:
       valueFiles:
         - $values/argocd/applications/kube-prometheus/values.yml
   - repoURL: https://github.com/netgroup-polito/cloudprog-2025.git
-    targetRevision: frc/argocd
+    targetRevision: main
     ref: values

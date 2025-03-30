@@ -7,4 +7,4 @@ resources:
 
 images:
 - name: ghcr.io/netgroup-polito/cloudprog-2025/timeapi
-  newTag: 0a12b8b8a67e492a630d4529e3f4bccb76f57d3d
+  newTag: main

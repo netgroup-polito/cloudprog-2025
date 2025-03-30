@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: timeapi-servicemonitor
+  labels:
+    app: timeapi
+spec:
+  selector:
+    matchLabels:
+      app: timeapi
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
