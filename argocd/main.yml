@@ -13,6 +13,6 @@ spec:
   source:
     path: ./argocd/applications/
     repoURL: https://github.com/netgroup-polito/cloudprog-2025.git
-    targetRevision: frc/argocd
+    targetRevision: main
   syncPolicy:
     automated: {}
