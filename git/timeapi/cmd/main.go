@@ -9,6 +9,7 @@ import (
 	"github.com/cheina97/timeserver/pkg/api"
 	"github.com/cheina97/timeserver/pkg/flags"
 	"github.com/cheina97/timeserver/pkg/handlers"
+	"github.com/cheina97/timeserver/pkg/metrics"
 )
 
 func main() {
@@ -17,6 +18,8 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
+
+	metrics.RegisterRequestsCounter(router)
 
 	api.RegisterHandlers(router, handlers.NewServer())
 
