@@ -8,8 +8,8 @@ import (
 
 var requestsCounter = prometheus.NewCounterVec(
 	prometheus.CounterOpts{
-		Name: "http_requests_total",
-		Help: "Total number of HTTP requests",
+		Name: "timeapi_http_requests_total",
+		Help: "Total number of HTTP requests received by timeapi",
 	},
 	[]string{"method", "endpoint"},
 )
