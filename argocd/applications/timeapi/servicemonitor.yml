@@ -9,6 +9,6 @@ spec:
     matchLabels:
       app: timeapi
   endpoints:
-    - port: metrics
-      path: /metrics
+    - path: /metrics
       interval: 30s
+      targetPort: 8080
