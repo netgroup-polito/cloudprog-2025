@@ -20,7 +20,7 @@ spec:
       name: bgppeers.metallb.io
       jsonPointers:
         - /spec/conversion/webhook/clientConfig/caBundle
-  sources:
-  - repoURL: https://metallb.github.io/metallb
-    chart: metallb
-    targetRevision: 0.14.9
+  source:
+    path: ./argocd/applications/metallb
+    repoURL: https://github.com/netgroup-polito/cloudprog-2025.git
+    targetRevision: main

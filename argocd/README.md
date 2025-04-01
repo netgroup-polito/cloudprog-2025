@@ -1,5 +1,19 @@
 # ArgoCD Setup Instructions
 
+## Setup Cluster
+
+### Run Kind Cluster
+
+   ```bash
+   kind create cluster --name argocddemo --config kind-config.yml
+   ```
+
+### Install a CNI
+
+   ```bash
+   cilium install --wait
+   ```
+
 ## Install ArgoCD
 
 ### Install ArgoCD in your Kubernetes cluster
@@ -13,6 +27,27 @@
 
    ```bash
    kubectl get pods -n argocd
+   ```
+
+### Patch argocd-cm to avoid ciliumidentities out of sync
+
+   Edit the configmap argocd-cm to disable cilium identity management. This is necessary to avoid issues with Cilium's identity management when using ArgoCD.
+
+   ```bash
+   kubectl edit configmap argocd-cm -n argocd
+   ```
+
+   Add the following lines to the configmap:
+
+   ```yaml
+   data:
+      resource.exclusions: |
+         - apiGroups:
+           - cilium.io
+           kinds:
+           - CiliumIdentity
+           clusters:
+           - "*"
    ```
 
 ### Access the ArgoCD server
