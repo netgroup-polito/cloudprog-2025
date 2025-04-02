@@ -4,7 +4,6 @@ resources:
 - deployment.yml
 - service.yml
 - ingress.yml
-- servicemonitor.yml
 
 images:
 - name: ghcr.io/netgroup-polito/cloudprog-2025/timeapi
