@@ -35,6 +35,7 @@ type PodCounterStatus struct {
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Count",type="integer",JSONPath=".status.count"
 
 // PodCounter is the Schema for the podcounters API
 type PodCounter struct {
