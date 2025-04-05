@@ -69,7 +69,7 @@ func (r *PodCounterReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	log.Info("Fetched PodCounter", "namespace", podCounter.Spec.Namespace)
 
 	// List all Pods in the specified namespace
-	//wait namespace is set by D
+	// wait namespace is set by D
 	var podList corev1.PodList
 	if err := r.List(ctx, &podList, client.InNamespace(podCounter.Spec.Namespace)); err != nil {
 		log.Error(err, "unable to list Pods")
@@ -91,17 +91,13 @@ func (r *PodCounterReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		return ctrl.Result{}, err
 	}
 
-
 	// Handle deletion (Finalizer Logic)
 	if !podCounter.DeletionTimestamp.IsZero() {
 		// Resource is being deleted
 		if controllerutil.ContainsFinalizer(&podCounter, podCounterFinalizer) {
 			// Perform cleanup tasks
 			log.Info("Performing finalizer cleanup", "PodCounter", podCounter.Name)
-			if err := r.cleanupPodCounter(ctx, &podCounter); err != nil {
-				log.Error(err, "Failed to clean up PodCounter")
-				return ctrl.Result{}, err
-			}
+			r.cleanupPodCounter(ctx, &podCounter)
 
 			// Remove finalizer after cleanup
 			controllerutil.RemoveFinalizer(&podCounter, podCounterFinalizer)
@@ -125,14 +121,12 @@ func (r *PodCounterReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 }
 
 // Cleanup logic when deleting a PodCounter
-func (r *PodCounterReconciler) cleanupPodCounter(ctx context.Context, podCounter *countersv1alpha1.PodCounter) error {
+func (r *PodCounterReconciler) cleanupPodCounter(ctx context.Context, podCounter *countersv1alpha1.PodCounter) {
 	// Example cleanup: Log that we're cleaning up
 	log := log.FromContext(ctx)
 	log.Info("Cleaning up resources for PodCounter", "name", podCounter.Name)
 
 	// If there were external resources (e.g., deleting a ConfigMap), we would remove them here
-
-	return nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
@@ -185,7 +179,6 @@ func (r *PodCounterReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		).
 		Complete(r)
 }
-
 
 // Helper function to check if a Pod has the "app=busybox" label
 func hasBusyboxLabel(obj client.Object) bool {

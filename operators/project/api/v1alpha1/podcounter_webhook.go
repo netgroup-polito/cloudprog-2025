@@ -191,7 +191,7 @@ func validatePodCounterSpec(podcounter *PodCounter) *field.Error {
 }
 
 func validateNamespace(namespace string) *field.Error {
-	//namespaces cannot contain "kube-" prefix
+	// namespaces cannot contain "kube-" prefix
 	if len(namespace) > 4 && namespace[:5] == "kube-" {
 		return field.Invalid(field.NewPath("spec").Child("namespace"), namespace, "cannot contain 'kube-' prefix")
 	}
