@@ -16,12 +16,19 @@ issues:
       linters:
         - dupl
         - lll
+    - path: _test\.go
+      linters:
+        - revive
+        - typecheck
+    - path: test/
+      linters:
+        - revive
+        - typecheck
 linters:
   disable-all: true
   enable:
     - dupl
     - errcheck
-    - exportloopref
     - ginkgolinter
     - goconst
     - gocyclo
@@ -30,7 +37,6 @@ linters:
     - gosimple
     - govet
     - ineffassign
-    - lll
     - misspell
     - nakedret
     - prealloc
