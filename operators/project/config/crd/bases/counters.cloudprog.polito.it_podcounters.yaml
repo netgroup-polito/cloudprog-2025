@@ -14,7 +14,11 @@ spec:
     singular: podcounter
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .status.count
+      name: Count
+      type: integer
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: PodCounter is the Schema for the podcounters API
