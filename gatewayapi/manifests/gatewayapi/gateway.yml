@@ -1,0 +1,11 @@
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: timeapi
+spec:
+  gatewayClassName: contour
+  listeners:
+    - name: http
+      hostname: "*.example.com"
+      protocol: HTTP
+      port: 80
