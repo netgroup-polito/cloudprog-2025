@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: timeapi
+spec:
+  hostnames:
+    - timeapi.kind.local
+  parentRefs:
+    - name: timeapi
+  rules:
+    - matches:
+        - path:
+            type: Exact
+            value: /time
+      backendRefs:
+        - name: timeapi
+          port: 8080
+          
