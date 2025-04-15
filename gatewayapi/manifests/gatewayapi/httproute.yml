@@ -6,7 +6,10 @@ spec:
   hostnames:
     - timeapi.kind.local
   parentRefs:
-    - name: timeapi
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: timeapi
+      namespace: default
   rules:
     - matches:
         - path:
